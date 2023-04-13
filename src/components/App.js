@@ -9,12 +9,19 @@ const App = () => {
 
 const OptimizeTheOperation = ({ onClick }) => {
   const [number, setNumber] = useState(10000);
+  const [inputValue, setInputValue] = useState("");
 
-  const prime = primeNumber(number);
+  const prime = useMemo(() => primeNumber(number), [number]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    setNumber(Number(event.target.num.value));
+    const value = Number(event.target.num.value);
+    setNumber(value);
+    setInputValue(value);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
   };
 
   return (
@@ -22,9 +29,9 @@ const OptimizeTheOperation = ({ onClick }) => {
       <br />
       Enter the number:
       <form onSubmit={submitHandler}>
-        <input id="num" />
+        <input id="num" value={inputValue} onChange={handleInputChange} />
         <button id="submit" type="submit">
-          Click me 
+          Click me
         </button>
       </form>
       <br />
